@@ -37,7 +37,7 @@ public class UserController {
         );
         return UserMapper.toResponse(user);
     }
-    @GetMapping
+    @GetMapping("/get-user")
     public List<UserResponse> getUsersByTenant(
             @RequestHeader("X-Tenant-ID") String tenantId
     ){
