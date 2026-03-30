@@ -1,4 +1,4 @@
-package com.indent.multitenanttodoapplication.application.usecase_implementation;
+package com.indent.multitenanttodoapplication.domain.service;
 
 import com.indent.multitenanttodoapplication.application.ports.input.CreateUserUseCase;
 import com.indent.multitenanttodoapplication.application.ports.output.UserRepositoryPort;
@@ -9,10 +9,10 @@ import com.indent.multitenanttodoapplication.domain.validator.UserValidator;
 import java.time.Instant;
 import java.util.UUID;
 
-public class CreateUserUseCaseImpl implements CreateUserUseCase {
+public class UserService implements CreateUserUseCase {
     private final UserRepositoryPort repository;
 
-    public CreateUserUseCaseImpl(UserRepositoryPort repository){
+    public UserService(UserRepositoryPort repository){
         this.repository = repository;
     }
     @Override

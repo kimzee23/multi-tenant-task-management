@@ -1,4 +1,4 @@
-package com.indent.multitenanttodoapplication.application.usecase_implementation;
+package com.indent.multitenanttodoapplication.domain.service;
 
 import com.indent.multitenanttodoapplication.application.ports.output.TenantRepositoryPort;
 import com.indent.multitenanttodoapplication.domain.model.Tenant;
@@ -13,16 +13,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CreateTenantUseCaseImplTest {
-
+class TenantServiceTest{
     @Mock
     private TenantRepositoryPort repository;
 
-    private CreateTenantUseCaseImpl useCase;
+    private TenantService useCase;
 
     @BeforeEach
     void setUp() {
-        useCase = new CreateTenantUseCaseImpl(repository);
+        useCase = new TenantService(repository);
     }
 
     @Test
@@ -56,3 +55,5 @@ class CreateTenantUseCaseImplTest {
         verify(repository, never()).save(any());
     }
 }
+
+

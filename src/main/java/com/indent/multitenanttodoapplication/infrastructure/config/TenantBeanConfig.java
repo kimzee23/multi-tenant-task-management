@@ -2,7 +2,7 @@ package com.indent.multitenanttodoapplication.infrastructure.config;
 
 import com.indent.multitenanttodoapplication.application.ports.input.CreateTenantUseCase;
 import com.indent.multitenanttodoapplication.application.ports.output.TenantRepositoryPort;
-import com.indent.multitenanttodoapplication.application.usecase_implementation.CreateTenantUseCaseImpl;
+import com.indent.multitenanttodoapplication.domain.service.TenantService;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.repository.SpringDataTenantRepository;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.TenantRepositoryAdapter;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +18,6 @@ public class TenantBeanConfig {
 
     @Bean
     public CreateTenantUseCase createTenantUseCase(TenantRepositoryPort repo) {
-        return new CreateTenantUseCaseImpl(repo);
+        return new TenantService(repo);
     }
 }
