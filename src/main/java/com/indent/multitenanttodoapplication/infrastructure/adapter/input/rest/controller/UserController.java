@@ -6,10 +6,10 @@ import com.indent.multitenanttodoapplication.domain.model.enumType.UserRole;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.request.UserRequest;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.response.UserResponse;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.mapper.UserMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("user")
 public class UserController {
 
     private CreateUserUseCase useCase;
