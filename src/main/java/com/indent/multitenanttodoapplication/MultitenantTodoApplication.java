@@ -9,5 +9,4 @@ public class MultitenantTodoApplication {
     public static void main(String[] args) {
         SpringApplication.run(MultitenantTodoApplication.class, args);
     }
-
 }
