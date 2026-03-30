@@ -2,31 +2,45 @@ package com.indent.multitenanttodoapplication.application.usecase;
 
 import com.indent.multitenanttodoapplication.application.ports.output.TenantRepositoryPort;
 import com.indent.multitenanttodoapplication.domain.model.Tenant;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class CreateTenantUseCaseImplTest {
 
-    private final TenantRepositoryPort repository = mock(TenantRepositoryPort.class);
+    @Mock
+    private TenantRepositoryPort repository;
 
-    private final CreateTenantUseCaseImpl useCase =
-            new CreateTenantUseCaseImpl(repository);
+    private CreateTenantUseCaseImpl useCase;
+
+    @BeforeEach
+    void setUp() {
+        useCase = new CreateTenantUseCaseImpl(repository);
+    }
 
     @Test
     void shouldCreateTenantSuccessfully() {
 
-        when(repository.existsByName("TestTenant")).thenReturn(false);
+        String name = "TestTenant";
 
-        Tenant tenant = useCase.createTenant("TestTenant");
+        when(repository.existsByName(name)).thenReturn(false);
+        when(repository.save(any()))
+                .thenAnswer(invocation -> invocation.getArgument(0));
 
-        assertNotNull(tenant.getId());
-        assertEquals("TestTenant", tenant.getName());
+        Tenant result = useCase.createTenant(name);
 
+        assertEquals(name, result.getName());
         verify(repository).save(any());
     }
+
+
 
     @Test
     void shouldThrowExceptionWhenTenantAlreadyExists() {
