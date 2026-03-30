@@ -4,6 +4,6 @@ package com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.
 import lombok.Data;
 
 @Data
-public class CreateTenantRequest {
+public class TenantRequest {
     private String name;
 }

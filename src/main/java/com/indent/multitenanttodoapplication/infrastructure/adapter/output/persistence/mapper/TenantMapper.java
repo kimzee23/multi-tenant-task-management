@@ -1,4 +1,4 @@
-package com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.util;
+package com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.mapper;
 
 import com.indent.multitenanttodoapplication.domain.model.Tenant;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.response.TenantResponse;
