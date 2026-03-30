@@ -4,7 +4,9 @@ import com.indent.multitenanttodoapplication.application.ports.output.UserReposi
 import com.indent.multitenanttodoapplication.domain.model.UserModel;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.entity.UserEntity;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.repository.SpringDataUserRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserRepositoryAdapter implements UserRepositoryPort {
 
     private final SpringDataUserRepository repository;
