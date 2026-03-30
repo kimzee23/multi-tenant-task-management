@@ -13,17 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("user")
 public class UserController {
 
     private CreateUserUseCase useCase;
     private GetUsersByTenantUseCase getUsersByTenantUseCase;
 
-    public UserController(CreateUserUseCase useCase) {
+    public UserController(CreateUserUseCase useCase, GetUsersByTenantUseCase getUsersByTenantUseCase) {
         this.useCase = useCase;
+        this.getUsersByTenantUseCase = getUsersByTenantUseCase;
     }
-
 
     @PostMapping
     public UserResponse createUser(

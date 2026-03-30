@@ -24,8 +24,7 @@ public class MultitenantTodoApplication {
     @Bean
     public CommandLineRunner init(UserRepositoryPort userRepository) {
         return args -> {
-            System.out.println(" Application started successfully build with love with");
-
+            System.out.println(" Application started successfully build with no Joy intend");
         };
     }
 }
