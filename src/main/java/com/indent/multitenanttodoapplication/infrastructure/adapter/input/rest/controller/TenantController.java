@@ -5,8 +5,10 @@ import com.indent.multitenanttodoapplication.domain.model.Tenant;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.request.CreateTenantRequest;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.response.TenantResponse;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.util.TenantMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/tenants")
 public class TenantController {
