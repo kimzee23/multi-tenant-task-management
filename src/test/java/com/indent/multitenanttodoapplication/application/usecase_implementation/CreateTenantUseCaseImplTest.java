@@ -1,4 +1,4 @@
-package com.indent.multitenanttodoapplication.application.usecase;
+package com.indent.multitenanttodoapplication.application.usecase_implementation;
 
 import com.indent.multitenanttodoapplication.application.ports.output.TenantRepositoryPort;
 import com.indent.multitenanttodoapplication.domain.model.Tenant;

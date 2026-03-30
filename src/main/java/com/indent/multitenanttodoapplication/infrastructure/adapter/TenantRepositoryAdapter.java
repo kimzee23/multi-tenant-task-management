@@ -1,7 +1,9 @@
-package com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence;
+package com.indent.multitenanttodoapplication.infrastructure.adapter;
 
 import com.indent.multitenanttodoapplication.application.ports.output.TenantRepositoryPort;
 import com.indent.multitenanttodoapplication.domain.model.Tenant;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.entity.TenantEntity;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.repository.SpringDataTenantRepository;
 
 public class TenantRepositoryAdapter implements TenantRepositoryPort {
      private final SpringDataTenantRepository repository;
@@ -10,12 +12,12 @@ public class TenantRepositoryAdapter implements TenantRepositoryPort {
      }
      @Override
     public Tenant save(Tenant tenant){
-         TenantDocument doc = new TenantDocument();
+         TenantEntity doc = new TenantEntity();
          doc.setId(tenant.getId());
          doc.setName(tenant.getName());
          doc.setCreatedAt(tenant.getCreatedAt());
 
-         TenantDocument saved = repository.save(doc);
+         TenantEntity saved = repository.save(doc);
          return new Tenant(
                  saved.getId(),
                  saved.getName(),

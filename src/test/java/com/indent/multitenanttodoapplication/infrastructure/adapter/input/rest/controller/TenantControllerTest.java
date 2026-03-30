@@ -2,7 +2,7 @@ package com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.
 
 import com.indent.multitenanttodoapplication.application.ports.input.CreateTenantUseCase;
 import com.indent.multitenanttodoapplication.domain.model.Tenant;
-import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.request.CreateTenantRequest;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.request.TenantRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +18,7 @@ class TenantControllerTest {
     @Test
     void shouldCreateTenantSuccessfully() {
 
-        CreateTenantRequest request = new CreateTenantRequest();
+        TenantRequest request = new TenantRequest();
         request.setName("TestTenant");
 
         when(useCase.createTenant("TestTenant"))
