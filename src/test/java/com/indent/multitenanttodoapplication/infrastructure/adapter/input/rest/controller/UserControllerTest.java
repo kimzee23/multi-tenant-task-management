@@ -5,6 +5,7 @@ import com.indent.multitenanttodoapplication.application.ports.input.GetUsersByT
 import com.indent.multitenanttodoapplication.domain.model.UserModel;
 import com.indent.multitenanttodoapplication.domain.model.enumType.UserRole;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.request.UserRequest;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.util.TenantContext;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -19,11 +20,12 @@ class UserControllerTest {
 
     private final UserController controller =
             new UserController(useCase,getUsersByTenantUseCase);
-
     @Test
     void shouldCreateUserSuccessfully() {
 
-     UserRequest request = new UserRequest();
+        TenantContext.setTenantId("tenant-1");
+
+        UserRequest request = new UserRequest();
         request.setEmail("test@mail.com");
         request.setRole("ADMIN");
 
@@ -36,16 +38,19 @@ class UserControllerTest {
                         .createdAt("now")
                         .build());
 
-        var response = controller.createUser("tenant-1", request);
+        var response = controller.createUser(request);
 
         assertEquals("test@mail.com", response.getEmail());
         assertEquals("ADMIN", response.getRole());
 
         verify(useCase).createUser("tenant-1", "test@mail.com", UserRole.ADMIN);
-    }
 
+        TenantContext.clear();
+    }
     @Test
     void shouldReturnUsersForTenant() {
+
+        TenantContext.setTenantId("tenant-123");
 
         List<UserModel> users = List.of(
                 UserModel.builder()
@@ -56,14 +61,17 @@ class UserControllerTest {
                         .build()
         );
 
-        when(getUsersByTenantUseCase.getUsersByTenant("tenant-123")).thenReturn(users);
+        when(getUsersByTenantUseCase.getUsersByTenant("tenant-123"))
+                .thenReturn(users);
 
-        var response = controller.getUsersByTenant("tenant-123");
+        var response = controller.getUsersByTenant();
 
         assertEquals(1, response.size());
         assertEquals("user@test.com", response.get(0).getEmail());
 
         verify(getUsersByTenantUseCase).getUsersByTenant("tenant-123");
+
+        TenantContext.clear();
     }
 
 }

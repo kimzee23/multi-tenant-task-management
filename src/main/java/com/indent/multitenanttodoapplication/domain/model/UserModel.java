@@ -12,6 +12,8 @@ public class UserModel {
     private String id;
     private String tenantId;
     private String email;
+    private String password;
+    private String phoneNumber;
     private UserRole role;
     private String createdAt;
 }
