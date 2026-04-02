@@ -12,6 +12,8 @@ public class UserEntity {
     private String tenantId;
     private String email;
     private String role;
+    private String password;
+    private String phoneNumber;
     private String createdAt;
 
 
