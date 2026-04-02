@@ -1,6 +1,7 @@
 package com.indent.multitenanttodoapplication.infrastructure.adapter;
 
 import com.indent.multitenanttodoapplication.application.ports.output.UserRepositoryPort;
+import com.indent.multitenanttodoapplication.domain.exception.ValidationException;
 import com.indent.multitenanttodoapplication.domain.model.UserModel;
 import com.indent.multitenanttodoapplication.domain.model.enumType.UserRole;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.entity.UserEntity;
@@ -8,8 +9,9 @@ import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persi
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-@Repository
 public class UserRepositoryAdapter implements UserRepositoryPort {
 
     private final SpringDataUserRepository repository;
@@ -52,6 +54,19 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
                         .build())
                 .toList();
 
+    }
+    @Override
+    public Optional<UserModel> findByEmailAndTenantId(String email, String tenantId) {
+        return repository.findByEmailAndTenantId(email, tenantId)
+                .map(doc -> UserModel.builder()
+                        .id(doc.getId())
+                        .tenantId(doc.getTenantId())
+                        .email(doc.getEmail())
+                        .password(doc.getPassword())
+                        .phoneNumber(doc.getPhoneNumber())
+                        .role(UserRole.valueOf(doc.getRole()))
+                        .createdAt(doc.getCreatedAt())
+                        .build());
     }
 }
 
