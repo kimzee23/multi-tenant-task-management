@@ -17,12 +17,11 @@ public class UserValidator {
         if(user.getRole()== null){
             throw new IllegalArgumentException ("Role is required");
         }
-        if (user.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")){
+        if (!user.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")){
             throw new IllegalArgumentException ("Invalid email format baba");
         }
-        if (user.getPhoneNumber() == null || !PHONE_PATTERN.matcher(user.getPhoneNumber()).matches()){
-            throw new IllegalArgumentException("Invalid Phone number");
-        }
+        if (user.getPhoneNumber() != null && !PHONE_PATTERN.matcher(user.getPhoneNumber()).matches())
+
         if (user.getPassword()== null || user.getPassword().length()<6){
             throw new IllegalArgumentException("Password can't be blank or less than six characters ");
         }

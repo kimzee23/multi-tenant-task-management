@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -36,6 +37,8 @@ class UserServiceTest {
         UserModel user = useCase.createUser(
                 "tenant-1",
                 "test@mail.com",
+
+
                 UserRole.ADMIN
         );
 
@@ -93,6 +96,22 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () ->
                 getUsersByTenantUseCase.getUsersByTenant(null)
         );
+    }
+    @Test
+    void shouldFindUserByEmailAndTenant() {
+
+        when(repository.findByEmailAndTenantId("test@mail.com", "tenant-1"))
+                .thenReturn(Optional.of(UserModel.builder()
+                        .id("1")
+                        .email("test@mail.com")
+                        .tenantId("tenant-1")
+                        .role(UserRole.USER)
+                        .build()));
+
+        Optional<UserModel> user =
+                repository.findByEmailAndTenantId("test@mail.com", "tenant-1");
+
+        assertTrue(user.isPresent());
     }
 
 }
