@@ -6,14 +6,16 @@ import com.indent.multitenanttodoapplication.domain.exception.ValidationExceptio
 import com.indent.multitenanttodoapplication.domain.model.UserModel;
 import com.indent.multitenanttodoapplication.domain.model.enumType.UserRole;
 import com.indent.multitenanttodoapplication.domain.validator.UserValidator;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.util.PasswordUtil;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.UUID;
-
-public class UserRegisterService implements RegisterUserUseCase {
+@Service
+public class RegisterService implements RegisterUserUseCase {
     private final UserRepositoryPort repository;
 
-    public UserRegisterService(UserRepositoryPort repository){
+    public RegisterService(UserRepositoryPort repository){
         this.repository =  repository;
     }
     @Override
@@ -25,7 +27,7 @@ public class UserRegisterService implements RegisterUserUseCase {
                 .id(UUID.randomUUID().toString())
                 .tenantId(tenantId)
                 .email(email)
-                .password(password)
+                .password(PasswordUtil.hash(password))
                 .phoneNumber(phoneNumber)
                 .role(UserRole.USER)
                 .createdAt(Instant.now().toString())
@@ -33,4 +35,5 @@ public class UserRegisterService implements RegisterUserUseCase {
         UserValidator.validate(user);
         return repository.save(user);
     }
+
 }
