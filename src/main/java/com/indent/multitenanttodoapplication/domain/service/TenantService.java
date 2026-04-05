@@ -1,21 +1,20 @@
-package com.indent.multitenanttodoapplication.application.usecase;
+package com.indent.multitenanttodoapplication.domain.service;
 
 import com.indent.multitenanttodoapplication.application.ports.input.CreateTenantUseCase;
 import com.indent.multitenanttodoapplication.application.ports.output.TenantRepositoryPort;
 import com.indent.multitenanttodoapplication.domain.exception.ValidationException;
 import com.indent.multitenanttodoapplication.domain.model.Tenant;
 import com.indent.multitenanttodoapplication.domain.validator.TenantValidator;
-import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.UUID;
 
 
-public class CreateTenantUseCaseImpl implements CreateTenantUseCase  {
+public class TenantService implements CreateTenantUseCase  {
 
     private final TenantRepositoryPort repository;
 
-    public CreateTenantUseCaseImpl(TenantRepositoryPort repository) {
+    public TenantService(TenantRepositoryPort repository) {
         this.repository = repository;
     }
 

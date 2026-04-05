@@ -1,18 +1,22 @@
-package com.indent.multitenanttodoapplication.application.usecase_implementation;
+package com.indent.multitenanttodoapplication.domain.service;
 
 import com.indent.multitenanttodoapplication.application.ports.input.CreateUserUseCase;
 import com.indent.multitenanttodoapplication.application.ports.output.UserRepositoryPort;
 import com.indent.multitenanttodoapplication.domain.model.UserModel;
 import com.indent.multitenanttodoapplication.domain.model.enumType.UserRole;
 import com.indent.multitenanttodoapplication.domain.validator.UserValidator;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.UUID;
 
-public class CreateUserUseCaseImpl implements CreateUserUseCase {
+@Slf4j
+@Service
+public class UserService implements CreateUserUseCase {
     private final UserRepositoryPort repository;
 
-    public CreateUserUseCaseImpl(UserRepositoryPort repository){
+    public UserService(UserRepositoryPort repository){
         this.repository = repository;
     }
     @Override
@@ -31,7 +35,6 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                 .build();
 
         UserValidator.validate(user);
-
         return repository.save(user);
     }
 }
