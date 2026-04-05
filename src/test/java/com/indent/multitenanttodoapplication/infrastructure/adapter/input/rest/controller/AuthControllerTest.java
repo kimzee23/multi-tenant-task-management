@@ -2,8 +2,14 @@ package com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.
 
 import com.indent.multitenanttodoapplication.application.ports.output.UserRepositoryPort;
 import com.indent.multitenanttodoapplication.domain.model.UserModel;
+import com.indent.multitenanttodoapplication.domain.model.enumType.UserRole;
 import com.indent.multitenanttodoapplication.domain.service.LoginService;
+import com.indent.multitenanttodoapplication.domain.service.RegisterService;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.request.RegisterRequest;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.response.AuthResponse;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.util.JwtUtil;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.util.PasswordUtil;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.util.TenantContext;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -55,6 +61,35 @@ class AuthControllerTest {
         assertThrows(RuntimeException.class, () ->
                 useCase.login("t1", "mail", "wrong")
         );
+    }
+    @Test
+   public void shouldRegisterUser() {
+
+        RegisterService register = mock(RegisterService.class);
+        LoginService login = mock(LoginService.class);
+        JwtUtil jwtUtil = mock(JwtUtil.class);
+
+        AuthController controller = new AuthController(register, login, jwtUtil);
+
+        TenantContext.setTenantId("t1");
+
+        RegisterRequest request = new RegisterRequest();
+        request.setEmail("test@mail.com");
+        request.setPassword("123");
+
+        when(register.register(any(), any(), any(),any()))
+                .thenReturn(UserModel.builder()
+                        .email("test@mail.com")
+                        .tenantId("t1")
+                        .phoneNumber("08115000080")
+                        .role(UserRole.USER)
+                        .build());
+
+        AuthResponse response = controller.register(request);
+
+        assertEquals("test@mail.com", response.getEmail());
+
+        TenantContext.clear();
     }
 
 }

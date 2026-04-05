@@ -6,6 +6,7 @@ import com.indent.multitenanttodoapplication.domain.service.RegisterService;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.request.LoginRequest;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.request.RegisterRequest;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.input.rest.data.response.AuthResponse;
+import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.util.JwtUtil;
 import com.indent.multitenanttodoapplication.infrastructure.adapter.output.persistence.util.TenantContext;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,11 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final RegisterService registerService;
     private final LoginService loginService;
+    private final JwtUtil jwtUtil;
     public AuthController(RegisterService registerService,
-                          LoginService loginService) {
+                          LoginService loginService, JwtUtil jwtUtil) {
         this.registerService = registerService;
         this.loginService = loginService;
+        this.jwtUtil = jwtUtil;
     }
+
         @PostMapping("/register")
             public AuthResponse register(@RequestBody RegisterRequest request) {
 
@@ -51,11 +55,13 @@ public class AuthController {
                         request.getEmail(),
                         request.getPassword()
                 );
+                String token = jwtUtil.generateToken(user);
 
                 return AuthResponse.builder()
                         .email(user.getEmail())
                         .tenantId(user.getTenantId())
                         .role(user.getRole().name())
+                        .token(token)
                         .build();
             }
 
