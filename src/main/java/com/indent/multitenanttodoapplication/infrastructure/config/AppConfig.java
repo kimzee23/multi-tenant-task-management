@@ -16,12 +16,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-
-    @Bean
-    public UserRepositoryPort userRepository(SpringDataUserRepository repo) {
-        return new UserRepositoryAdapter(repo);
-    }
-
     @Bean
     public CreateUserUseCase createUserUseCase(UserRepositoryPort repo) {
         return new UserService(repo);

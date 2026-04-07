@@ -8,6 +8,7 @@ import java.security.PrivateKey;
 @Setter
 @Getter
 public class UserRequest {
+    private String tenantId;
     private String email;
     private String role;
     private String PhoneNumber;

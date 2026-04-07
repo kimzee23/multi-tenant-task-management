@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
+    private String tenantId;
     private String email;
     private String phoneNumber;
     private String password;

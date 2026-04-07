@@ -11,5 +11,6 @@ public class AuthResponse {
     private String token;
     private String tenantId;
     private String email;
+    private String phoneNumber;
     private String role;
 }
