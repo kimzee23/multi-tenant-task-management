@@ -1,6 +1,7 @@
 package com.indent.multitenanttodoapplication.domain.exception;
 
 import com.indent.multitenanttodoapplication.domain.model.enumType.UserRole;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -8,9 +9,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> handleValidationException(ValidationException ex) {
+        return ResponseEntity.badRequest().body(
+                Map.of(
+                        "error", "Validation Error",
+                        "message", ex.getMessage()
+                )
+        );
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handleIllegalArgument(IllegalArgumentException ex) {
@@ -37,5 +47,14 @@ public class GlobalExceptionHandler {
         return Arrays.stream(UserRole.values())
                 .map(Enum::name)
                 .collect(Collectors.joining(", "));
+    }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> handleUserNotFound(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                Map.of(
+                        "error", "Not Found",
+                        "message", ex.getMessage()
+                )
+        );
     }
 }

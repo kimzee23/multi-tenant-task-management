@@ -13,8 +13,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET = "secretsecretsecretsecretsecret";
-    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+    private final String SECRET = "my-super-secret-key-that-is-at-least-32-bytes!";
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String generateToken(UserModel user) {
         return Jwts.builder()
